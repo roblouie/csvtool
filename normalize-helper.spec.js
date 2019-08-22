@@ -14,7 +14,7 @@ describe('Normalize Helper', function() {
       sinon.stub(moment, 'parseZone').returns({
         utcOffset: () => {
           return {
-            format: () => '2004-10-02T11:44:11-05:00'
+            format: () => FormattedDateReturn
           }
         },
       });
@@ -41,7 +41,7 @@ describe('Normalize Helper', function() {
   });
 
   describe('filterOutRowsWithBadDates()', () => {
-    it('removes rows with unparseable dates and logs error to console', () => {
+    it('removes rows with unparsable dates and logs error to console', () => {
       const csvObjects = [
         {
           Timestamp: '3/12/14 12:00:00 AM',
@@ -66,6 +66,7 @@ describe('Normalize Helper', function() {
       const filteredResults = normalizeHelper.filterOutRowsWithBadDates(csvObjects);
 
       assert(consoleLogSpy.calledOnce);
+      assert.equal(consoleLogSpy.getCall(0).args[0], "The date in row 2 contains invalid data and can't be parsed. This row will be dropped.");
       assert(filteredResults.length, 1);
       assert.equal(filteredResults.find(result => result.Timestamp === 'Invalid date'), undefined);
     });
