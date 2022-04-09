@@ -13,7 +13,7 @@
     "csvtool": "./index.js"
   },
   "dependencies": {
-    "moment": "^2.24.0"
+    "moment": "^2.29.2"
   },
   "devDependencies": {
     "mocha": "^6.2.0",
